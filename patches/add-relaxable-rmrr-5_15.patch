@@ -1,5 +1,5 @@
---- iommu.c	2022-05-04 18:50:13.078092713 +0100
-+++ iommu.c.fixed	2022-05-04 18:45:09.909672434 +0100
+--- a/drivers/iommu/intel/iommu.c	2022-05-04 18:50:13.078092713 +0100
++++ b/drivers/iommu/intel/iommu.c	2022-05-04 18:45:09.909672434 +0100
 @@ -345,6 +345,7 @@
  static int intel_iommu_superpage = 1;
  static int iommu_identity_mapping;
