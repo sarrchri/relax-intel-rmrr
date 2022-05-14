@@ -1,0 +1,29 @@
+name: Build kernel modules
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build-kernel-debs:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out the repo
+      uses: actions/checkout@v2
+
+    - name: Run the build process with Docker
+      uses: addnab/docker-run-action@v3
+      with:
+          image: aterfax/relaxable-rmrr-proxmox-kernel-builder:latest 
+          options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel
+          run: |
+              /bin/sh -c bash -c "cd /build/proxmox/ && ./build_latest.sh"
+              
+    - name: Zip up debs
+      run: zip release.zip ${{ github.workspace }}/debs -r
+
+    - name: Archive the generated debs
+      uses: actions/upload-artifact@v3
+      with:
+        name: RMRR-Relaxation-Patched-PVE-kernel-debs-zip
+        path: release.zip
