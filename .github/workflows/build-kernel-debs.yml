@@ -15,7 +15,7 @@ jobs:
       run: cd /build/proxmox/ && ./build_latest.sh
     
     - name: Zip up debs
-      run: zip release.zip /build/proxmox/debs -r
+      run: zip -r release.zip /build/proxmox/proxmox-kernel/debs
 
     - name: Archive the generated debs
       uses: actions/upload-artifact@v3
