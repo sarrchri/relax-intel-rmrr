@@ -1,6 +1,6 @@
 # 🍻 Relaxed RMRR Mapping for Linux 3.17+
-
-
+[![Build and Publish Docker Image](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/docker-publish.yml)
+[![Build kernel debs](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml/badge.svg)](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml)
 ## Note - this fork uses a different patching method
 
 This fork has been amended to patch the required iommu source files using ``sed`` rather than ``patch``. This is achieved by using ``sed`` to amend the pve-kernel **Makefile** using several further ``sed`` commands to edit the iommu source file during the make process as this make process pulls the source filess (chicken/egg problem.)
