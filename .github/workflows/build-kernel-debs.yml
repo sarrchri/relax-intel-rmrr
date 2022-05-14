@@ -12,7 +12,7 @@ jobs:
         
     steps:         
     - name: Build kernels
-      run: /bin/sh -c bash -c "cd /build/proxmox/ && ./build_latest.sh"
+      run: cd /build/proxmox/ && ./build_latest.sh
     
     - name: Zip up debs
       run: zip release.zip /build/proxmox/debs -r
