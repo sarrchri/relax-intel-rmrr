@@ -1,4 +1,4 @@
-name: Build kernel modules
+name: Build kernel debs
 
 on:
   workflow_dispatch:
