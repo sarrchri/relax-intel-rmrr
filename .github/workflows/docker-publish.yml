@@ -43,12 +43,12 @@ jobs:
         with:
           # relative path to the place where source code with Dockerfile is located
           context: .
+          push: true
           # Note: tags has to be all lower-case
           tags: |
             aterfax/relaxable-rmrr-proxmox-kernel-builder:latest 
             ghcr.io/aterfax/relaxable-rmrr-proxmox-kernel-builder:latest
           # build on feature branches, push only on main branch
-          push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
