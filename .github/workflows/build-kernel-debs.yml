@@ -11,7 +11,7 @@ jobs:
       options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel
         
     steps:         
-    - name: Build kernels
+    - name: Build kernel
       run: cd /build/proxmox/ && ./build_latest.sh
     
     - name: Zip up debs
