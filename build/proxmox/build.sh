@@ -26,17 +26,49 @@ echo '############# STEP 0 - PERFORM SANITY CHECKS ##############'
 echo '###########################################################'
 # Make sure script is working in the directory it is located in
 cd "$(dirname "$(readlink -f "$0")")"
+SCRIPT_DIR=$(pwd)
+
 
 # Build process will fail if you're not a root (+ apt actions itself need it)
 if [[ "$EUID" -ne 0 ]]
   then echo "This script should be run bash root"
-  exit
+  exit 1
 fi
 
 # Sanity check: make sure no two builds are started nor we have something leftover from previous attempts
-if [[ -d "proxmox-kernel" ]]; then
-  echo 'Directory "proxmox-kernel" already exists - if your previous build failed DELETE it first'
+if [[ -f "$SCRIPT_DIR/script_running" ]]; then
+  echo "This script already appears to be running or has not cleaned up correctly."
+  echo "To continue please remove $SCRIPT_DIR/script_running if you are sure a script is not already running."
   exit 1
+fi
+
+# Set the lockfile.
+touch $SCRIPT_DIR/script_running
+
+if [[ -d "proxmox-kernel" ]]; then
+  echo 'Directory "proxmox-kernel" already exists - resetting cloned Git repositories.'
+  cd proxmox-kernel
+
+  if [[ -d "pve-kernel" ]]; then
+    cd pve-kernel
+    git clean -xfd
+    git submodule foreach --recursive git clean -xfd
+    git reset --hard
+    git submodule foreach --recursive git reset --hard
+    git submodule update --init --recursive
+    PVE_KERNEL_GIT_DIR_PRESENT=1
+    cd ..
+  fi
+
+  if [[ -d "relax-intel-rmrr" ]]; then
+    cd relax-intel-rmrr
+    git reset --hard
+    RELAX_INTEL_RMRR_GIT_DIR_PRESENT=1
+    cd ..
+  fi
+
+  cd $SCRIPT_DIR
+  
 fi
 
 
@@ -72,13 +104,19 @@ echo '############ STEP 2 - DOWNLOAD CODE TO COMPILE ############'
 echo '###########################################################'
 # Create working directory
 echo "Step 2.0: Creating working directory"
-mkdir proxmox-kernel
+mkdir -p proxmox-kernel
 cd proxmox-kernel
 
-# Clone official Proxmox kernel repo & Relaxed RMRR Mapping patch
+# Clone official Proxmox kernel repo & Relaxed RMRR Mapping patch if not already present.
 echo "Step 2.1: Downloading Proxmox kernel toolchain & patches"
-git clone --depth=1 -b ${PVE_KERNEL_BRANCH} git://git.proxmox.com/git/pve-kernel.git
-git clone --depth=1 ${RELAX_INTEL_GIT_REPO}
+
+if [[ $PVE_KERNEL_GIT_DIR_PRESENT -ne 1 ]]; then
+  git clone --depth=1 -b ${PVE_KERNEL_BRANCH} git://git.proxmox.com/git/pve-kernel.git
+fi
+
+if [[ $RELAX_INTEL_RMRR_GIT_DIR_PRESENT -ne 1 ]]; then
+  git clone --depth=1 ${RELAX_INTEL_GIT_REPO}
+fi
 
 # Go to the actual Proxmox toolchain
 cd pve-kernel
@@ -110,6 +148,7 @@ patch -p1 < ../relax-intel-rmrr/patches/${PROXMOX_PATCH}
 echo "Step 3.1: Compiling kernel... (it will take 30m-3h)"
 # Note: DO NOT add -j to this make, see https://github.com/kiler129/relax-intel-rmrr/issues/1
 # This step will compile kernel & build all *.deb packages as Proxmox builds internally
+make clean
 make
 
 
@@ -131,9 +170,11 @@ echo '###########################################################'
 # Remove all (~30GB) of stuff leftover after compilation
 echo "Step 5: Cleaning up..."
 cd ..
-mkdir debs
-mv pve-kernel/*.deb ./debs
-rm -rf pve-kernel
-rm -rf relax-intel-rmrr
+mkdir -p $SCRIPT_DIR/proxmox-kernel/debs
+mv pve-kernel/*.deb $SCRIPT_DIR/proxmox-kernel/debs
+#rm -rf pve-kernel
+#rm -rf relax-intel-rmrr
 
+# Remove the lockfile.
+rm $SCRIPT_DIR/script_running
 exit 0
