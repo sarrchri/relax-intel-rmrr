@@ -10,9 +10,12 @@ jobs:
       image: aterfax/relaxable-rmrr-proxmox-kernel-builder:latest
       options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel
         
-    steps:          
+    steps:         
+    - name: Build kernels
+      run: /bin/sh -c bash -c "cd /build/proxmox/ && ./build_latest.sh"
+    
     - name: Zip up debs
-      run: zip release.zip ${{ github.workspace }}/debs -r
+      run: zip release.zip /build/proxmox/debs -r
 
     - name: Archive the generated debs
       uses: actions/upload-artifact@v3
