@@ -6,17 +6,11 @@ on:
 jobs:
   build-kernel-debs:
     runs-on: ubuntu-latest
-    steps:
-
-    - name: Check out the repo
-      uses: actions/checkout@v2
-
-    - name: Run the build process with Docker
-      uses: addnab/docker-run-action@v3
-      with:
-          image: aterfax/relaxable-rmrr-proxmox-kernel-builder:latest 
-          options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel
-              
+    container:
+      image: aterfax/relaxable-rmrr-proxmox-kernel-builder:latest
+      options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel
+        
+    steps:          
     - name: Zip up debs
       run: zip release.zip ${{ github.workspace }}/debs -r
 
