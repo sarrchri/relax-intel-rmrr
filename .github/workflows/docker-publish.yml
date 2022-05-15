@@ -1,24 +1,19 @@
 name: Build and Publish Docker Image
 
 on:
-  # run it on push to the default repository branch
   push:
     branches: [main]
   workflow_dispatch:
 
 jobs:
-  # define job to build and publish docker image
   build-and-push-docker-image:
     name: Build Docker image and push to repositories
-    # run only when code is compiling and tests are passing
     runs-on: ubuntu-latest
-
-    # steps to perform in job
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # setup Docker buld action
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -39,14 +34,11 @@ jobs:
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: .
           push: true
-          # Note: tags has to be all lower-case
           tags: |
             aterfax/relaxable-rmrr-proxmox-kernel-builder:latest 
             ghcr.io/aterfax/relaxable-rmrr-proxmox-kernel-builder:latest
-          # build on feature branches, push only on main branch
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
