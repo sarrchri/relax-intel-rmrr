@@ -8,7 +8,7 @@ jobs:
     runs-on: [pve-kernel]
     container:
       image: aterfax/relaxable-rmrr-proxmox-kernel-builder:latest
-      options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel
+      options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel #Note this is technically a very bad idea if your Runner is doing more than this sole action due to environment pollution.
         
     steps:         
     - name: Build kernel
