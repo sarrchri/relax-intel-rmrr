@@ -30,6 +30,7 @@ RUN TEMP_DEB="$(mktemp)" && \
 
 
 COPY build /build
+COPY patches /patches
 
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
 ENTRYPOINT bash -c "cd /build/proxmox/ && ./build_latest.sh"
