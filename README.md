@@ -8,7 +8,7 @@ This fork has been amended to patch the required iommu source files using ``sed`
 The key ``sed`` commands can be found at:
 
 -  [relax-intel-rmrr/patches/relaxable-rmrr-patch-sed.txt](patches/relaxable-rmrr-patch-sed.txt)
--  [relax-intel-rmrr/build/proxmox/build.sh#L106](build/proxmox/build.sh#L106)
+-  [relax-intel-rmrr/build/proxmox/build.sh#L106](build/proxmox/build.sh#L144)
 
 
 ## 🐧💨 Now you can use PCI passthrough on broken platforms
