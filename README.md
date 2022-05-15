@@ -30,6 +30,7 @@ highly recommended.
 ### Table of Contents
 1. [Installation](README.md#installation)
     - [Proxmox - premade packages](README.md#proxmox---premade-packages-easy)
+    - [Docker - building from sources](README.md#docker---build-packages-from-sources-intermediate)
     - [Proxmox - building from sources](README.md#proxmox---building-from-sources-advanced)
     - [Other distros](README.md#other-distros)
 2. [Configuration](README.md#configuration)
