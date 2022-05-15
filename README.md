@@ -93,7 +93,7 @@ described here. Thus, I publish precompiled packages.
 
    `/mnt/scratch/proxmox-kernel-build-area/proxmox-kernel/debs`
    
-4. Now you can [install debs like you would premade packages](../../README.md#proxmox---premade-packages-easy).
+4. Now you can [install debs like you would premade packages](README.md#proxmox---premade-packages-easy).
 
 5. [Configure the kernel](README.md#configuration)
    
