@@ -65,7 +65,7 @@ As I believe in *[eating your own dog food](https://en.wikipedia.org/wiki/Eating
 described here. Thus, I publish precompiled packages.
 
 1. Go to the [releases tab](https://github.com/Aterfax/relax-intel-rmrr/releases) and pick appropriate packages
-2. Download all `*.deb`s packages to the server (you can copy links and use `wget https://...` on the server itself)
+2. Download `release.zip`, unzip it and `cd` down to the bottom of the directory tree. (You can copy links and use `wget https://...` and `unzip release.zip` on the server itself)
 3. Install all using `dpkg -i *.deb` in the folder where you downloaded the debs
 4. *(OPTIONAL)* Verify the kernel works with the patch disabled by rebooting and checking if `uname -r` shows a version 
    ending with `-pve-relaxablermrr`
