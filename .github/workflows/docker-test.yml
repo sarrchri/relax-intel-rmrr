@@ -3,10 +3,9 @@ name: Build Docker Image
 on:
   # run it during pull request
   pull_request:
-    branches:
-      - master
-    paths:
-      - 'Dockerfile'
+    paths: 
+    - 'Dockerfile'
+      
   workflow_dispatch:
 
 jobs:
