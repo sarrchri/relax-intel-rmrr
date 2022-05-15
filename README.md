@@ -64,7 +64,7 @@ highly recommended.
 As I believe in *[eating your own dog food](https://en.wikipedia.org/wiki/Eating_your_own_dog_food)* I run the kernel
 described here. Thus, I publish precompiled packages.
 
-1. Go to the [releases tab](https://github.com/kiler129/relax-intel-rmrr/releases/) and pick appropriate packages
+1. Go to the [releases tab](https://github.com/Aterfax/relax-intel-rmrr/releases) and pick appropriate packages
 2. Download all `*.deb`s packages to the server (you can copy links and use `wget https://...` on the server itself)
 3. Install all using `dpkg -i *.deb` in the folder where you downloaded the debs
 4. *(OPTIONAL)* Verify the kernel works with the patch disabled by rebooting and checking if `uname -r` shows a version 
