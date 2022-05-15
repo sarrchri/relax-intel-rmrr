@@ -75,23 +75,29 @@ described here. Thus, I publish precompiled packages.
 #### Docker - build packages from sources (intermediate)
 
 #### Prerequisites
-1. Proxmox 6/7 install (recommended) or Debian Buster/Bullseye <small>*(it WILL fail on Ubuntu!)*</small>
-2. Root access.
-3. ~40GB of free space.
+1. Docker installed (tested on Ubuntu 22.04 & Debian 10).
+2. ~40GB of free space.
+3. Git clone of this repo (if building the image yourself.)
 
 #### Steps
-1. Clone the repo and `cd` to the `build/proxmox/` directory. 
-2. Run the [`build_latest.sh`](build.sh) script from terminal:  
-   `RMRR_AUTOINSTALL=1 bash ./build_latest.sh`  
-   <small>*You can also manually execute commands in the script step-by-step. To facilitate that the script contains 
-   extensive comments for every step.*</small>
 
-3. *(OPTIONAL)* Verify the kernel works with the patch disabled by rebooting and checking if `uname -r` shows a version
-   ending with `-pve-relaxablermrr`
-4. [Configure the kernel](../../README.md#configuration)
+1. (Optional) Build the container image yourself from the top level of the cloned repo (Dockerfile will be present):  
 
-This process will also leave precompiled `*.deb` packages, in case you want to copy them to other Proxmox hosts you have.
+   `docker build -t relaxable-rmrr-proxmox-kernel-builder  .`
 
+2. Run the Docker image with an appropriate host file system binding (you can just pull the image direct from DockerHub, adjust the command below to the correct image name if you are building yourself):
+
+   `docker run --name relaxable-rmrr-proxmox-kernel-builder -v /mnt/scratch/proxmox-kernel-build-area/proxmox-kernel:/build/proxmox/proxmox-kernel -it aterfax/relaxable-rmrr-proxmox-kernel-builder:latest`
+
+3. Wait until the build finishes (30 - 300 minutes depending on hardware used) and find the debs on your host file system path e.g. 
+
+   `/mnt/scratch/proxmox-kernel-build-area/proxmox-kernel/debs`
+   
+4. Now you can [install debs like you would premade packages](../../README.md#proxmox---premade-packages-easy).
+
+5. [Configure the kernel](README.md#configuration)
+   
+Note: If you want to build specific versions you can override the entrypoint from `bash -c "cd /build/proxmox/ && ./build_latest.sh"` to a script version of your choosing e.g. `bash -c "cd /build/proxmox/ && ./build7.1-10.sh"`
 
 ---
 
