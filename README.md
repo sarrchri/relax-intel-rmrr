@@ -99,6 +99,8 @@ described here. Thus, I publish precompiled packages.
    
 Note: If you want to build specific versions you can override the entrypoint from `bash -c "cd /build/proxmox/ && ./build_latest.sh"` to a script version of your choosing e.g. `bash -c "cd /build/proxmox/ && ./build7.1-10.sh"`
 
+6. Navigate to your `proxmox-kernel` directory and remove the build files to save space (if desired.)
+
 ---
 
 #### Proxmox - building from sources (advanced)
