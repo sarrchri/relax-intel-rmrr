@@ -56,7 +56,7 @@ This is mostly intended for building packages for later use (and/or when you don
    
 4. Now you can [install debs like you would premade packages](../../README.md#proxmox---premade-packages-easy).
 
-5. [Configure the kernel](README.md#configuration)
+5. [Configure the kernel](../../README.md#configuration)
    
 Note: If you want to build specific versions you can override the entrypoint from `bash -c "cd /build/proxmox/ && ./build_latest.sh"` to a script version of your choosing e.g. `bash -c "cd /build/proxmox/ && ./build7.1-10.sh"`
 
