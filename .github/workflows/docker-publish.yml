@@ -3,6 +3,8 @@ name: Build and Publish Docker Image
 on:
   push:
     branches: [master]
+    paths: 
+    - 'Dockerfile'
   workflow_dispatch:
 
 jobs:
