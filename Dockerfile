@@ -28,7 +28,7 @@ RUN TEMP_DEB="$(mktemp)" && \
  dpkg -i "$TEMP_DEB" && \
  rm -f "$TEMP_DEB" 
 
-
+# Copy both folders into docker root filepath.
 COPY build /build
 COPY patches /patches
 
