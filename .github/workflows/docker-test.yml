@@ -5,7 +5,8 @@ on:
   pull_request:
     branches:
       - master
-    types: [opened, synchronize, closed]
+    paths:
+      - 'Dockerfile'
   workflow_dispatch:
 
 jobs:
