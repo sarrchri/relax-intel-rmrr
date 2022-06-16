@@ -54,6 +54,8 @@ if [[ -d "proxmox-kernel" ]]; then
     git clean -xfd
     git submodule foreach --recursive git clean -xfd
     git reset --hard
+    git pull
+    git checkout ${PVE_KERNEL_BRANCH}
     git submodule foreach --recursive git reset --hard
     git submodule update --init --recursive
     PVE_KERNEL_GIT_DIR_PRESENT=1
@@ -111,7 +113,7 @@ cd proxmox-kernel
 echo "Step 2.1: Downloading Proxmox kernel toolchain & patches"
 
 if [[ $PVE_KERNEL_GIT_DIR_PRESENT -ne 1 ]]; then
-  git clone --depth=1 -b ${PVE_KERNEL_BRANCH} git://git.proxmox.com/git/pve-kernel.git
+  git clone git://git.proxmox.com/git/pve-kernel.git
 fi
 
 if [[ $RELAX_INTEL_RMRR_GIT_DIR_PRESENT -ne 1 ]]; then
@@ -120,6 +122,12 @@ fi
 
 # Go to the actual Proxmox toolchain
 cd pve-kernel
+
+#Checkout the correct branch 
+git checkout ${PVE_KERNEL_BRANCH}
+
+echo "Showing Git status:"
+git status
 
 # (OPTIONAL) Download flat copy of Ubuntu hirsute kernel submodule
 #  If you skip this the "make" of Proxmox kernel toolchain will download a copy (a Proxmox kernel is based on Ubuntu
