@@ -1,0 +1,26 @@
+name: Build kernel debs v7.1
+
+on:
+  workflow_dispatch:
+  schedule:
+      # * is a special character in YAML so you have to quote this string
+      - cron:  '0 4 * * 6'
+jobs:
+  build-kernel-debs:
+    runs-on: [pve-kernel]
+    container:
+      image: aterfax/relaxable-rmrr-proxmox-kernel-builder:latest
+      options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel #Note this is technically a very bad idea if your Runner is doing more than this sole action due to environment pollution.
+        
+    steps:         
+    - name: Build kernel
+      run: cd /build/proxmox/ && ./build7.1-10.sh
+    
+    - name: Zip up debs
+      run: zip -r release.zip /build/proxmox/proxmox-kernel/debs
+
+    - name: Archive the generated debs
+      uses: actions/upload-artifact@v3
+      with:
+        name: RMRR-Relaxation-Patched-PVE-kernel-debs-zip
+        path: release.zip
