@@ -24,7 +24,10 @@ jobs:
       with:
         name: RMRR-Relaxation-Patched-PVE-kernel-debs-zip
         path: release.zip
-        
+ 
+    - name: Calculate release zip checksum
+      run: bash -c 'sha256sum release.zip && md5sum release.zip'
+ 
     - name: Clean up release zip
       run: rm release.zip
       
