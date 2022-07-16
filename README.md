@@ -66,10 +66,11 @@ described here. Thus, I publish precompiled packages.
 
 1. Go to the [releases tab](https://github.com/Aterfax/relax-intel-rmrr/releases) and pick appropriate packages
 2. Download `release.zip`, unzip it and `cd` down to the bottom of the directory tree. (You can copy links and use `wget https://...` and `unzip release.zip` on the server itself)
-3. Install all using `dpkg -i *.deb` in the folder where you downloaded the debs
-4. *(OPTIONAL)* Verify the kernel works with the patch disabled by rebooting and checking if `uname -r` shows a version 
+3. *(OPTIONAL)* Verify the release signature on ``release.zip`` as discussed here: https://github.com/Aterfax/relax-intel-rmrr/discussions/16
+4. Install all using `dpkg -i *.deb` in the folder where you downloaded the debs
+5. *(OPTIONAL)* Verify the kernel works with the patch disabled by rebooting and checking if `uname -r` shows a version 
    ending with `-pve-relaxablermrr`
-5. [Configure the kernel](README.md#configuration)
+6. [Configure the kernel](README.md#configuration)
 
 ---
 #### Docker - build packages from sources (intermediate)
