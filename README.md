@@ -3,7 +3,7 @@
 [![Build kernel debs](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml/badge.svg)](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml)
 ## Note - this fork uses a different patching method / Docker based builds now functional.
 
-This fork has been amended to patch the required iommu source files using ``sed`` rather than ``patch``. This is achieved by using ``sed`` to amend the pve-kernel **Makefile** using several further ``sed`` commands to edit the iommu source file during the make process as this make process pulls the source filess (chicken/egg problem.)
+This fork has been amended to patch the required iommu source files using ``sed`` rather than ``patch``. This is achieved by using ``sed`` to amend the pve-kernel **Makefile** using several further ``sed`` commands to edit the iommu source file during the make process as this make process pulls the source files (chicken/egg problem.)
 
 The key ``sed`` commands can be found at:
 
