@@ -1,10 +1,10 @@
 name: Build kernel debs v7.1
 
-#on:
-  #workflow_dispatch:
-  #schedule:
-      # * is a special character in YAML so you have to quote this string
-      # - cron:  '0 4 * * 6'
+on:
+  workflow_dispatch:
+  schedule:
+      #* is a special character in YAML so you have to quote this string
+      - cron:  '0 4 * * 6'
 jobs:
   build-kernel-debs:
     runs-on: [pve-kernel]
