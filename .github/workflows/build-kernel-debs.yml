@@ -7,7 +7,7 @@ on:
       - cron:  '0 2 * * 6'
 jobs:
   build-kernel-debs:
-    runs-on: [self-hosted]
+    runs-on: [pve-kernel]
     container:
       image: risunen/relaxable-rmrr-proxmox-kernel-builder:latest
       options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel #Note this is technically a very bad idea if your Runner is doing more than this sole action due to environment pollution.
