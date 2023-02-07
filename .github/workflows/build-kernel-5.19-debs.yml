@@ -1,10 +1,10 @@
-name: Build kernel debs
+name: Build kernel 5.19 debs
 
 on:
   workflow_dispatch:
   schedule:
-      # * is a special character in YAML so you have to quote this string
-      - cron:  '0 2 * * 6'
+      #* is a special character in YAML so you have to quote this string
+      - cron:  '0 4 * * 6'
 jobs:
   build-kernel-debs:
     runs-on: [pve-kernel]
@@ -20,7 +20,7 @@ jobs:
       run: bash -c 'if [[ -d "/build/proxmox/proxmox-kernel/debs" ]]; then rm -rf /build/proxmox/proxmox-kernel/debs; fi'
 
     - name: Build kernel
-      run: cd /build/proxmox/ && ./build_latest.sh
+      run: cd /build/proxmox/ && ./build_kernel-5.19.sh
 
     - name: Zip up debs
       run: zip -r release.zip /build/proxmox/proxmox-kernel/debs
@@ -42,4 +42,3 @@ jobs:
 
     - name: Clean Workspace after Build
       uses: AutoModality/action-clean@v1.1.0
-
