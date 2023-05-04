@@ -1,6 +1,6 @@
 # 🍻 Relaxed RMRR Mapping for Linux 3.17+
-[![Build and Publish Docker Image](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/docker-publish.yml)
-[![Build kernel debs](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml/badge.svg)](https://github.com/Aterfax/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml)
+[![Build and Publish Docker Image](https://github.com/sarrchri/relax-intel-rmrr/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/sarrchri/relax-intel-rmrr/actions/workflows/docker-publish.yml)
+[![Build kernel debs](https://github.com/sarrchri/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml/badge.svg)](https://github.com/sarrchri/relax-intel-rmrr/actions/workflows/build-kernel-debs.yml)
 ## Note - this fork uses a different patching method / Docker based builds now functional.
 
 This fork has been amended to patch the required iommu source files using ``sed`` rather than ``patch``. This is achieved by using ``sed`` to amend the pve-kernel **Makefile** using several further ``sed`` commands to edit the iommu source file during the make process as this make process pulls the source files (chicken/egg problem.)
@@ -64,9 +64,8 @@ highly recommended.
 As I believe in *[eating your own dog food](https://en.wikipedia.org/wiki/Eating_your_own_dog_food)* I run the kernel
 described here. Thus, I publish precompiled packages.
 
-1. Go to the [releases tab](https://github.com/Aterfax/relax-intel-rmrr/releases) and pick appropriate packages
+1. Go to the [releases tab](https://github.com/sarrchri/relax-intel-rmrr/releases) and pick appropriate packages
 2. Download `release.zip`, unzip it and `cd` down to the bottom of the directory tree. (You can copy links and use `wget https://...` and `unzip release.zip` on the server itself)
-3. *(OPTIONAL)* Verify the release signature on ``release.zip`` as discussed here: https://github.com/Aterfax/relax-intel-rmrr/discussions/16
 4. Install all using `dpkg -i *.deb` in the folder where you downloaded the debs
 5. *(OPTIONAL)* Verify the kernel works with the patch disabled by rebooting and checking if `uname -r` shows a version 
    ending with `-pve-relaxablermrr`
