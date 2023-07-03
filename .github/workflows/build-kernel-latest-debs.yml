@@ -1,0 +1,41 @@
+name: Build kernel latest debs
+
+on:
+  workflow_dispatch:
+  schedule:
+      # * is a special character in YAML so you have to quote this string
+      - cron:  '0 4 * * 6'
+jobs:
+  build-kernel-debs:
+    runs-on: [pve-kernel]
+    container:
+      image: risunen/relaxable-rmrr-proxmox-kernel-builder:latest
+      options: -v ${{ github.workspace }}:/build/proxmox/proxmox-kernel #Note this is technically a very bad idea if your Runner is doing more than this sole action due to environment pollution.
+
+    steps:
+    - name: Pre-clean up debs if present
+      run: bash -c 'if [[ -d "/build/proxmox/proxmox-kernel/debs" ]]; then rm -rf /build/proxmox/proxmox-kernel/debs; fi'
+
+    - name: Build kernel
+      run: cd /build/proxmox/ && ./build_latest.sh
+
+    - name: Zip up debs
+      run: zip -r release.zip /build/proxmox/proxmox-kernel/debs
+
+    - name: Archive the generated debs
+      uses: actions/upload-artifact@v3
+      with:
+        name: RMRR-Relaxation-Patched-PVE-kernel-debs-zip
+        path: release.zip
+
+    - name: Calculate release zip checksum
+      run: bash -c 'sha256sum release.zip && md5sum release.zip'
+
+    - name: Clean up release zip
+      run: rm release.zip
+
+    - name: Clean up debs if present
+      run: bash -c 'if [[ -d "debs" ]]; then rm -rf debs; fi'
+
+    - name: Clean Workspace after Build
+      uses: AutoModality/action-clean@v1.1.0
